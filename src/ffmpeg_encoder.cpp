@@ -5,11 +5,6 @@
 
 namespace libencoder {
 
-static inline int64_t rescale_ts(int64_t val, AVRational context_time_base, AVRational new_base)
-{
-	return av_rescale_q_rnd(val, context_time_base, new_base, (AVRounding) (AV_ROUND_NEAR_INF | AV_ROUND_PASS_MINMAX));
-}
-
 ffmpeg_encoder::ffmpeg_encoder(const std::string& live_name, std::string fmt /*= "mpegts"*/, std::string version/* = ""*/)
 	: m_fmt_ctx(NULL)
 	, m_h264_ctx(NULL)
@@ -479,12 +474,8 @@ void ffmpeg_encoder::flush()
 		}
 		if (got_output)
 		{
-			if (pkt.pts != AV_NOPTS_VALUE)
-				pkt.pts = av_rescale_q(pkt.pts, m_h264_ctx->time_base, m_video_stream->time_base);
-			if (pkt.dts != AV_NOPTS_VALUE)
-				pkt.dts = av_rescale_q(pkt.dts, m_h264_ctx->time_base, m_video_stream->time_base);
-			pkt.duration = (int)av_rescale_q(pkt.duration, m_audio_ctx->time_base, m_audio_stream->time_base);
 			pkt.stream_index = m_video_stream->index;
+			av_packet_rescale_ts(&pkt, m_h264_ctx->time_base, m_video_stream->time_base);
 
 			boost::mutex::scoped_lock l(m_mutex);
 
