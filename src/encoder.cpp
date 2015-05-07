@@ -24,7 +24,7 @@
 #include "encoder.hpp"
 #include "ffmpeg_encoder.hpp"
 
-static std::string benchmarked_preset = "fast";
+static std::string calculated_preset = "fast";
 
 namespace libencoder
 {
@@ -50,7 +50,7 @@ namespace libencoder
 		m_vc.bit_rate = 1000;
 		m_vc.height = video_height;
 		m_vc.width = video_width;
-		m_vc.preset = benchmarked_preset;
+		m_vc.preset = calculated_preset;
 		m_vc.profile = "main";
 		m_vc.fps_num = 1;
 		m_vc.fps_den = m_vc.fps;
@@ -534,42 +534,32 @@ extern "C"
 
 		if (freq > 42000)
 		{
-			benchmarked_preset = "placebo";
+			calculated_preset = "placebo";
 		}
 		else if (freq > 33000)
 		{
-			benchmarked_preset = "veryslow";
+			calculated_preset = "veryslow";
 		}
 		else if (freq > 20000)
 		{
-			benchmarked_preset = "slower";
+			calculated_preset = "slower";
 		}
 		else if (freq > 12000)
 		{
-			benchmarked_preset = "slow";
+			calculated_preset = "slow";
 		}
 		else if (freq > 6500)
 		{
-			benchmarked_preset = "medium";
+			calculated_preset = "medium";
 		}
 		else if (freq < 5500)
 		{
-			benchmarked_preset = "ultrafast";
+			calculated_preset = "ultrafast";
 		}
 		else if (freq < 10500)
 		{
-			benchmarked_preset = "veryfast";
+			calculated_preset = "veryfast";
 		}
-
-		std::stringstream ss;
-
-		ss << "cpufreq is " << freq << " so we set prset to " << benchmarked_preset << "\r\n";
-
-#ifdef _WIN32
-		OutputDebugStringA(ss.str().c_str());
-#else
-
-#endif
 	}
 }
 
