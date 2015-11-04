@@ -28,9 +28,9 @@ struct RECT
 class CEncoder
 {
 public:
-	CEncoder(const char* filename, RECT do_clip, int fps, int video_width, int video_height, bool keep_ratio, int video_quality, int samplerate)
+	CEncoder(const std::string& filename, RECT do_clip, int fps, int video_width, int video_height, bool keep_ratio, int video_quality, int samplerate)
 		: m_filename(filename)
-		, m_encoder(create_encoder(filename, 2, samplerate, fps, video_width, video_height, keep_ratio, do_clip.top, do_clip.bottom, do_clip.left, do_clip.right))
+		, m_encoder(create_encoder(filename.c_str(), 2, samplerate, fps, video_width, video_height, keep_ratio, do_clip.top, do_clip.bottom, do_clip.left, do_clip.right))
 		, m_is_capturing(false)
 	{
 		if(!m_encoder)
