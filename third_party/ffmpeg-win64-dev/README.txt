@@ -2,7 +2,7 @@ This is a FFmpeg win64 shared build by Kyle Schwarz.
 
 Zeranoe's FFmpeg Builds Home Page: <http://ffmpeg.zeranoe.com/builds/>
 
-FFmpeg version: 20151018-git-002b049
+FFmpeg version: 2.8.1
   libavutil      54. 30.100 / 54. 30.100
   libavcodec     56. 57.100 / 56. 57.100
   libavformat    56. 40.101 / 56. 40.101
